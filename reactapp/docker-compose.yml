@@ -1,11 +1,32 @@
-version: "3"
+version: "3.9"
 services: 
-    dev:
-        build: 
-            context: .
-            dockerfile: Dockerfile.dev
+    react-app:
+        image: "react-app"
+        build: .
+        stdin_open: true
         ports: 
             - "3000:3000"
+        networks: 
+            - "mern-app"
         volumes: 
-            - /var/app/node_modules
-            - .:/var/app
+            - ".:/var/app"
+            - "/var/app/node_modules"
+        environment:
+            - CHOKIDAR_USEPOLLING=true
+    
+    test:
+        image: "react-app"
+        build: .
+        stdin_open: true
+        networks: 
+            - "mern-app"
+        volumes: 
+            - ".:/var/app"
+            - "/var/app/node_modules"
+        environment:
+            - CHOKIDAR_USEPOLLING=true
+        command: ["npm","run","test"]
+
+networks: 
+    mern-app:
+        driver: bridge

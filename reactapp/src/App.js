@@ -9,6 +9,9 @@ function App() {
         <p>
           Nice start !!
         </p>
+        <p>
+          New to come
+        </p>
       </header>
     </div>
   );
